@@ -39,14 +39,14 @@
 # we will be calculating gradient
 x = torch.tensor(2, requires_grad=True)
 
-## define the curve for which we need 
+# define the curve for which we need 
 # to calculate gradient
 y = x**2  
 
-## tell pytorch to calculate gradient for y
+# tell pytorch to calculate gradient for y
 y.backward()
 
-## calculate gradient value 
+# calculate gradient value 
 x.grad
 ```
 
@@ -92,8 +92,6 @@ class ToySet(Dataset):
 		return self.x.shape[0]
 ```
 
-
-
 ## transforms
 Use `torchvision.transforms.Compose` to generate a sequence of transformers. 
 Each transformer has to implement the following template
@@ -109,7 +107,6 @@ class MyTransformer(object):
 		
 t = transforms.Compose([MyTransformer1(), MyTransformer2()])
 ```
-
 
 ## Linear Regression Prediction
 
@@ -139,7 +136,6 @@ yhat = model(torch.tensor([[1]])) # this will call the formward method
 ## Optimizer Tips
 1. `optimizer.zero_grad()` -- set gradient to zero 
 2. `optimizer.step()` -- updates the parameters. Note this should be called after running `backward` on loss criterion
-
 
 
 ## Gradient Descent 
