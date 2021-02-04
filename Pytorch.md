@@ -162,3 +162,92 @@ for epoch in range(4)
 		
 ```
 
+
+## Module Abstractions (Sequential, nn.ModuleList)
+
+Consider following network architecture example and how to leverage different abstractions
+
+**Verbose**
+
+```
+class Net(nn.Module):
+    
+    def __init__(self, D_in, D_out):
+        super(Net, self).__init__()
+        self.l1 = nn.Linear(D_in, 50)
+        self.l2 = nn.Linear(50, 40)
+        self.l3 = nn.Linear(40, D_out)
+    
+    def forward(self, x):
+        x = torch.relu(self.l1(x))
+        x = torch.relu(self.l2(x))
+        x = self.l3(x)
+        return x
+  
+# using ModuleList()
+class Net(nn.Module):
+    def __init__(self,D_in, D_out):
+        super(Net, self).__init__()
+        
+         # layers can an input argument 
+         # for arbitrary number of layers
+        layers = [D_in, 50, 40, D_out]        
+        self.hidden = nn.ModuleList()
+        
+        # iterate over two elements 
+        for inputSize, outSize in zip(layers, layers[1:]):
+            self.hidden.append(nn.Linear(inputSize, outSize))
+    
+    def forward(self, x):
+        l = len(self.hidden)
+        for idx, layer in enumerate(self.hidden):
+            if idx < l-1: # intermediate layers
+                activation = torch.relu(layer(activation))
+            else:
+                activation = layer(activation)
+        return activation
+```
+
+## Dropout
+* use ``nn.Dropout(p=0.1)`` to implement dropout. P value indicates probability of zero. Thus, P=0.1 indicates that probability of zero is 10 percent. 
+* Use low p value for layers with few neurons. use high P value for layers with lot of neurons.
+* Call `model.train()` to enable dropout during training of the network
+* Call `model.eval()` to disable dropout during evaluation
+
+## Weight Initialization
+**Xavier Method:**
+```
+linear = nn.Linear(input_size, output_size)
+torch.nn.init.xavier_uniform_(linear.weight)
+```
+
+**He Method**:
+```
+linear = nn.Linear(input_size, output_size)
+torch.nn.init.kaiming_uniform_(linear.weight)
+```
+
+## Batch Normalization
+Advantages
+* Reduces internal covariate shift
+* remove dropout
+* increases learning rate
+* bias is not necessary
+
+## Convolution
+**size of output layer**
+* Mx, My = Size of Original Matrix
+* Kx, Ky = Size of Kernel
+* Sx, Sy = Size of stride
+* Px, Py = Padding Size
+* $M'_x, M'_y$ = Size of output matrix
+
+$$M'_x = (M_x - K_x + P_x)/S_x + 1$$
+$$M'_y = (M_y - K_y + P_y)/S_y + 1$$
+
+```
+nn.Conv2d(in_channels=1, out_channels=1, kernel_size=3, stride=2, padding=1)
+```
+Above `out_channels` refers to the number of convolution kernels to apply. The final output will be linear sum of kernel application on the input channel. `in_channel` refers to the number of input layers. For example an image has RGB color scheme and thus there are 3 input channels. 
+
+

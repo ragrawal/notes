@@ -130,7 +130,7 @@ $$D(S, L) = \sum_i{L_i log(S_i)}$$
 $$ p_j = \frac{e^{z_j}}{\sum_{k=1}^{K}e^{z_k}}$$
 
 * Used to convert real values to probability scores
-* Its different from regular normalization because of teh following reasons mentioned overe [here](http://cs231n.github.io/linear-classify/#softmax)
+* Its different from regular normalization because of the following reasons mentioned overe [here](http://cs231n.github.io/linear-classify/#softmax)
 
 ### Reasons to use exp
 1. Range of exp is non-negative numbers. Thus by applying exp we are making sure that all values are $>=0$. 
@@ -1009,4 +1009,46 @@ $$H(y,\hat{y}) = -\sum_{i=1}^{n}P(y_i)log(P(\hat{y}_i))$$.
 For a binary system, the entropy calculation can be further written as 
 
 $$H(y,\hat{y}) = -\sum_{i=1}^{n}\left[P(y_i)log(P(\hat{y}_i)) + (1-y_i)log(P(1-\hat{y}_i))\right]$$.
+
+## Vanishing Gradient in DL
+Gradient becoming zero is known as vanishing gradient problem. It can happen for multiple reasons, such as:
+1. **bad activation function**: When using sigmoid activation function, the output value ranges between 0 and 1. Since in most cases the value is less than 1, when computing backpropagation the derivative value will tend to be zero and thereby the parameters won't get updated. TanH address this problem by having a range of -1 to 1 but still suffer from vanishing gradient problem. Relu uses a threshold function and the value ranges from 0 to infinity and hence is able to handle vanishing gradient problem in a much better way. 
+2. **bad initialization value**: If the random initialization weights are too small or too large, it leads to vanishing gradient. The range of the uniform distribution should be proportional to number of neurons in a layer. There are different techniques used to initialize weights. For instance Pytorch initializes weights by uniformly selecting weights between $-1/\sqrt{L_i}$ and $+1/\sqrt{L_i}$ where L is the number of neurons in a layer. 
+
+## Weight Initialization Techniques In DL
+While we randomly initialize weights using uniform distribution, different techniques propose different range for the uniform distribution. Below are different ranges proposed by different techniques: 
+
+1. PyTorch Default Method: $-1/\sqrt{L_i}$ and $+1/\sqrt{L_i}$ where L is the number of neurons in a layer. 
+2. **Xavier Method**: $-\sqrt{6}/\sqrt{L_{out}-L{in}}$ and $\sqrt{6}/\sqrt{L_{out}-L{in}}$, where $L_{in}$ is the number neurons in the input layer and $L_{out}$ is the number of neurons in the output layer.
+3. **He Method**: 
+
+
+## Why x / 0 is undefined
+Anynumber divided by zero is actually infinity. For instance if we 5/1 will be 5, 5/0.5 will be 10, 5/0.01 = 500 and so forth. As you can see as we approach zero, the quotient becomes increasingly large and approaches infinity. However, this means any number divided by zero will be infinity, or in other words, infinity multiplied by zero can be any number. This is meaningless in mathematics. 
+
+Here is another way to show how allowing divison by zero leads to absurd results
+
+* Assuming $0 * 1 = 0; 0 * 2 = 0$
+* Then $ 0 * 1 = 0 * 2$
+* Dividing both sides by zero: $\frac{0 * 1}{0} = \frac{0 * 2}{0}$
+* yields: $1 = 2$ ..
+
+This is the reason that 0/0 is also undefined.  
+
+## Zeno's paradox
+1. **Dichotomy Paradox**: "That which is in locomotion must arrive at the half-way stage before it arrives at the goal" (Aristotle, Physics). Support a man wishes to take a step. Before he can take a full step, he must take a half step. Before he can take a half step, he must take a quarter step and so forth. Then how to take the first step. 
+2. **Achilles and the tortoise**: In the paradox of Achilles and the tortoise, Achilles is in a footrace with the tortoise. Achilles allows the tortoise a head start of 100 meters, for example. Suppose that each racer starts running at some constant speed, one faster than the other. After some finite time, Achilles will have run 100 meters, bringing him to the tortoise's starting point. During this time, the tortoise has run a much shorter distance, say 2 meters. It will then take Achilles some further time to run that distance, by which time the tortoise will have advanced farther; and then more time still to reach this third point, while the tortoise moves ahead. Thus, whenever Achilles arrives somewhere the tortoise has been, he still has some distance to go before he can even reach the tortoise. As Aristotle noted, this argument is similar to the Dichotomy.
+3. **Arrow Paradox:** In the arrow paradox, Zeno states that for motion to occur, an object must change the position which it occupies. He gives an example of an arrow in flight. He states that in any one (duration-less) instant of time, the arrow is neither moving to where it is, nor to where it is not. It cannot move to where it is not, because no time elapses for it to move there; it cannot move to where it is, because it is already there. In other words, at every instant of time there is no motion occurring. If everything is motionless at every instant, and time is entirely composed of instants, then motion is impossible.
+
+## Laplacian Smoothing
+* also known as additive smoothing or lidstone smoothing
+* it is a technique to smooth probabilities of categorical data. When applying bayesian statistics on NLP, the probability of an unknown word would be zero and would cause the whole probability to be zero. Instead we replace the probability of the word with a very small probability and take the same amount from rest of the words. This process is known as laplacing smoothing. 
+
+$$ P(w_i | class) = \frac{freq(w_i, class) + \alpha}{N_class + \alpha d} $$
+where
+* $\alpha$ is the default weight of a word (usually 1)
+* d is the number of unique words in the vocabulary. 
+* $N_class$ is the total weight of all the words associated with the given class. 
+
+
 
