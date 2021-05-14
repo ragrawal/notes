@@ -440,7 +440,7 @@ $y' = 2ax $ or $\frac{\partial{y}}{\partial{x}} = 2ax$
 
 ## PCA
 
-* PCA can be used to find similar vectors in an rank deficient matrix. This is what is used in spectral clustering.
+* The central idea of PCA is to retrain maximum variance in the dataset with minimal number of dimensions. This is achieved by transforming given dataset to a new vector space (principal components) which are uncoorelated. 
 
 ## Spectral Clustering
 
@@ -1050,5 +1050,55 @@ where
 * d is the number of unique words in the vocabulary. 
 * $N_class$ is the total weight of all the words associated with the given class. 
 
+## Cosine Similarity
+$$ cos(\beta) = \frac{v \dot w}{||v||||w||} $$
+
+```
+cosine_similarity = np.dot(v, w) / (np.linalg.norm(v) * np.linalg.norm(w)) 
+```
+
+* In NLP, consine angle is used to determine similarity between two documents. 
+* The range of consine similarity is -1 and 1. While 1 indicates exactly similar documents, -1 indicates that documents are exactly opposite. Instead of consine similarity, it might be easier to   convert it into **cosine distance** which is given as $cos\_dist = 1 - cos\_similarity$. The range for $cos\_dist$ will be 0 to 2. Large the value, the more different the two vectors are. 
+
+
+## Covariance and Covariance Matrix
+Covariance can be generally described as average relationship between coordinates of points. For instance we have a 2D data with three points: (-2, 1), (0, 0) and (2, -1). Covariance of this dataset is given as : $\frac{(-2 * 1) + (0 * 0) + (2 * -1)}{3} = \frac{-2 + 0 - 2}{3} = \frac{-4}{3}$. 
+
+
+## Frobenius Norm 
+$$||A||_F = \sqrt{tr(A^TA)} = \sqrt{\sum_{i=1}^{m}\sum_{j=1}^n|a_{ij}|^2}$$
+
+Example: if A is 2 X 2 Matrix such as 
+A = [[2, 2], [2, 2]], then Frobenius norm will be $\sqrt{2^2 + 2^2 + 2^2 + 2^2} = 4$  
+
+* Frobenius norm is differentiable and hence can be used with Gradient optimization techniques
+* Also known as euclidean norm. Note that usually euclidean norm is applied on a single vector whereas Frobenius norm is applied on a matrix.
+
+
+## Locality Sensitive Hashing
+* It is a technique that hashes similar input items into the same buckets with high probability. It uses multiple hashing algorithms to repeateadly hash a single data point into multiple buckets 
+* Implementation (for N dimensional data): Assuming if you have an N dimensional data (such as in the case of NLP) and you want to hash word vectors that are you close to each other. In this case LSH can be used as follows:
+	* Randomly initialize a normal vector. A normal vector uniquely identifies a hyperplane that splits the vector space into exactly two sub regions. Compute direction of all the word vectors relative to this hyperplane.  The sign of the dot product between the normal vector and the candidate work indicates on which side of the hyperplane is the word. If the magnitude of the dot product is <=0 then set to zero. 
+	* Take the sum of all the directions using the following formula: $\sum_i{2^i h^i}$ where i is the ith randomnly initialized vector and $h^i$ is the sign of mangitude of a word vector relative to the ith normal vector i.e. if the dot product is -10, then h = 0. If it is 10 then h = 1. 
+	* Repeat the above process to generate many different hashes. 
+
+## Machine Translation Problem
+Problem: Convert English to French
+1. Generate word vectors for English and French
+2. The aim is to learn rotation matrix (R) that transforms english word vector space into french word vector space and minimizes the difference between translation i.e. $argmin || XR - Y ||$ where X is the matrix of word embedding of english words and Y is the matrix of word embedding of french words. R is the rotation matrix that we. want to learn. 
+3. Use mean squared Frobenius as the loss function. Assume $A = XR - Y$, Frobenius norm is defined as 
+$$ ||A||_F = \sqrt{\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2} $$. 
+Hence the actual loss function is $\frac{1}{m}||XR-Y||_F^2$
+4. The above loss function is differentiable and hence we can use gradient descent approach to identify R matrix. The gradient of $\frac{1}{m}||XR-Y||_F^2$ with respect to R is $\frac{2}{m}X^T(XR-Y)$. 
+5. Once we have the R matrix, we can use dot product of any new english word and identity all the closet french words to XR vector. 
+
+## Emission Probabilities
+
+It is used in reference to Markov chains (POS tagging). Emission probabilities is the joint probability of a term and POS tag. More technically, it is the probability of going from a hidden state (POS tag) to the observable state (term). For instance, emission probability represents probability of going from verb state to term say "eat". 
+
+## Viterbi Algorithm
+It is a graph algorithm to find shortest/longest path. It is used in parts of speech tagging to determine most likely sequence of hidden states in the context of hidden markov model (HMM). The algorithm involves forward and backward or (traceback) pass. In the forward pass you move from starting point to the next possible nodes and keep track of accumulated distance or probabilities in a matrix, say C. Also we retain the source in another matrix, say D. Once we have completed forward pass, we do a backward pass to find the smallest/largest route. 
+
+Source: https://www.youtube.com/watch?v=6JVqutwtzmo
 
 
