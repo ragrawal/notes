@@ -1087,8 +1087,11 @@ Problem: Convert English to French
 1. Generate word vectors for English and French
 2. The aim is to learn rotation matrix (R) that transforms english word vector space into french word vector space and minimizes the difference between translation i.e. $argmin || XR - Y ||$ where X is the matrix of word embedding of english words and Y is the matrix of word embedding of french words. R is the rotation matrix that we. want to learn. 
 3. Use mean squared Frobenius as the loss function. Assume $A = XR - Y$, Frobenius norm is defined as 
-$$ ||A||_F = \sqrt{\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2} $$. 
+
+$$ ||A||_F = \sqrt{\sum_{i=1}^m\sum_{j=1}^n|a_{ij}|^2} $$
+
 Hence the actual loss function is $\frac{1}{m}||XR-Y||_F^2$
+
 4. The above loss function is differentiable and hence we can use gradient descent approach to identify R matrix. The gradient of $\frac{1}{m}||XR-Y||_F^2$ with respect to R is $\frac{2}{m}X^T(XR-Y)$. 
 5. Once we have the R matrix, we can use dot product of any new english word and identity all the closet french words to XR vector. 
 
@@ -1101,4 +1104,13 @@ It is a graph algorithm to find shortest/longest path. It is used in parts of sp
 
 Source: https://www.youtube.com/watch?v=6JVqutwtzmo
 
+
+## Law of 72 (Investment)
+The amount of time it takes for your principal to double at X% return is approximately equal to 72 / X. For instance, if you investment returns 7% return then it will take $72 / 7 \approx 10.5$ years to double
+
+Caveats:
+
+* applies to compound interest
+* 72 applies within the range of 6% to 10% return. Outside of the range, adjust 72 using this formula: $72 - (8 - r)/3$. For instance assume rate of return is 2%. Since 2% is less than 6%, adjust 72 to be $72 - (8 - 2)/3 = 70$. Then the amount of time for the investment to double will be $70 / 2 = 35$ years. For 11% return, it will be 
+$$\frac{(72 + 3/3)}{11} \approx \frac{73}{11} \approx 6.6~years$$
 
