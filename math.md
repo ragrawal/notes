@@ -812,7 +812,7 @@ and so on
 ## R2 (R2 squarred error)
 
 		
-$
+$$
 \begin{equation}
 \begin{split}
 R^2 & = \frac{\textrm{Explained Squared Error}}{\textrm{Total Squared Error}} \\
@@ -820,7 +820,7 @@ R^2 & = \frac{\textrm{Explained Squared Error}}{\textrm{Total Squared Error}} \\
 	& \approx 1 - \frac{\textrm{Area Between Given Model and Ideal Model}}{\textrm{Area Between Mean Model And Ideal Model}}
 	\end{split}
 	\end{equation}
-	$
+$$
 
 <table>
 <td>
