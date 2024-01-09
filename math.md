@@ -292,9 +292,8 @@ Its a bounded differential real function that is defined for all input values an
 * Often standard logistic function is referred as sigmoid function. But note that sigmoid function or sigmoid is a family of functions that satisfy above constraints and logistic function is just one type of sigmoid function. Other examples o
 * Other examples of Sigmoid Function are: Hyperbolic tangent, arctangent, Gudermannian, etc. 
      
- 
 
-##Logit function
+## Logit function
 
 $logit(p) = log(\frac{p}{1-p})$
 
@@ -432,7 +431,7 @@ Tangent at a point along the cruve represents rate of change of y w.r.t. to x.
 
 Using method of increments, we can show that as rate of change along x approaches zero, the rate of change along y is given as $2ax$ i.e 
 
-$$ \lim{\Delta{x} \rightarrow 0}\frac{\Delta{y}}{\Delta{x}} = 2ax$$
+$$ \lim{\Delta{x} \rightarrow 0}\frac{\Delta{y}}{\Delta{x}} = 2ax $$
 
 which is same as 
 
@@ -842,11 +841,11 @@ Theoretically, $R^2$ can range from -1 to 1. It will be < 0 when the fittted mod
 
 For a single variable, linear Regression can be represented as $y = a + bx$ where 
 $$b = r \frac{S_y}{S_x}$$
-and $$ r = \textrm{pearson correlation coefficient} = \frac{\sqrt{(x-\bar{x})(y-\bar{y})}}{(n-1)S_xS_y} $$
+and $$r = \textrm{pearson correlation coefficient} = \frac{\sqrt{(x-\bar{x})(y-\bar{y})}}{(n-1)S_xS_y}$$
 
 Combining above two questions, slope of linear regression is given as
 
-$$ b = \frac{\sqrt{(x-\bar{x})(y-\bar{y})}}{nS_x} = \frac{\sqrt{(x-\bar{x})(y-\bar{y})}}{\sum{(x-\bar{x})^2}}$$
+$$b = \frac{\sqrt{(x-\bar{x})(y-\bar{y})}}{nS_x} = \frac{\sqrt{(x-\bar{x})(y-\bar{y})}}{\sum{(x-\bar{x})^2}}$$
  
  and a is given as $a = \bar{y} - b\bar{x}$
  
