@@ -863,7 +863,7 @@ Example: Model Height of plant (H) as a function of amount of bacteria (B) in so
 
 The optimal equation with interaction term is 
 
-$$Height = B0 + B1*Bacteria + B2*Sun + B3*Bacteria*Sun$$
+$$Height = B0 + B1*Bacteria + B2*Sun + B3 \* Bacteria \* Sun$$
 
 **Question: What is the unique effect of Bacteria.**
 
