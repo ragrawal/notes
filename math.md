@@ -931,9 +931,9 @@ In contrast to L1 regularization, as $\theta_i$ approaches zero, the penalty bec
 
 ## Derivative of Absolute Value
 
-$$y=|x| = \sqrt{x^2} = (x^2)^{1/2}$$
+$y=|x| = \sqrt{x^2} = (x^2)^{1/2}$
 
-$
+$$
 \begin{equation}
 \begin{split}
 \frac{dy}{dx} = \frac{1}{2}(x^2)^{1/2-1} (2x) \\
@@ -941,7 +941,7 @@ $
 & = \frac{x}{\sqrt{x^2}}\\
 	\end{split}
 	\end{equation}
-	$
+$$
 	
 ## Basis Function
 
